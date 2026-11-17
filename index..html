@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ملف الأداء الوظيفي</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:"Tajawal","Segoe UI",Tahoma,sans-serif;color:#5a3a4a;
+background:radial-gradient(circle at 10% 8%,#ffe3ec 0,transparent 40%),radial-gradient(circle at 90% 20%,#f1e2ff 0,transparent 40%),radial-gradient(circle at 50% 100%,#ffe9f1 0,transparent 50%),#fff4f6}
+.wrap{max-width:520px;margin:0 auto;padding:18px 14px 40px;position:relative}
+.fl{position:absolute;font-size:34px;opacity:.9;pointer-events:none}
+.title{position:relative;margin:34px auto 14px;width:92%;text-align:center;padding:22px 10px 14px;
+background:linear-gradient(#fff,#fff0f4);border:3px solid #e6c27a;border-radius:46px 46px 40px 40px/36px 36px 40px 40px;box-shadow:0 0 0 4px #fff,0 8px 18px #e9a9bd66,inset 0 0 14px #ffd9e4}
+.title h1{margin:0;font-size:30px;color:#4b3340;font-weight:800;text-shadow:0 2px 0 #fff}
+.title .bk{font-size:26px}
+.bow{position:absolute;top:-26px;left:50%;transform:translateX(-50%);font-size:44px;filter:drop-shadow(0 3px 2px #d9779a66)}
+.name{display:flex;align-items:center;gap:8px;margin:12px 4px 18px;padding:8px 14px;border-radius:30px;background:linear-gradient(90deg,#f7c3d4,#f0a6c0);box-shadow:inset 0 2px 5px #fff9,0 4px 10px #e9a9bd66}
+.name span{font-size:14px;color:#fff;font-weight:700;white-space:nowrap;text-shadow:0 1px 2px #b5557a}
+.name input{flex:1;min-width:0;border:0;background:#fff8;border-radius:20px;padding:7px 12px;font:inherit;font-size:14px;color:#5a3a4a;outline:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 10px}
+.card{position:relative;border:0;padding:0;background:none;cursor:pointer;font:inherit;text-align:center;margin-top:18px}
+.card.c10{grid-column:1/span 1}
+.last{grid-column:1/-1;display:flex;justify-content:center;gap:10px}
+.last .card{width:calc(33.3% + 14px)}
+.env{position:relative;border-radius:14px;padding:30px 6px 10px;min-height:96px;display:flex;align-items:flex-end;justify-content:center;
+background:linear-gradient(160deg,var(--a),var(--b));box-shadow:0 5px 10px #0002,inset 0 2px 4px #fff9}
+.env::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#fff7 0,transparent 35%),linear-gradient(225deg,#fff7 0,transparent 35%);clip-path:polygon(0 0,100% 0,50% 62%);transform-origin:top;transform:perspective(260px) rotateX(0deg);transition:transform .55s ease}
+.lab{position:relative;z-index:1;background:linear-gradient(#fff,#fff5f0);border:1.5px solid #e6c27a;border-radius:16px;padding:6px 6px;font-size:11.5px;font-weight:800;line-height:1.35;color:#4b3340;width:96%;box-shadow:0 2px 4px #0002}
+.qr{position:absolute;z-index:2;top:-20px;left:50%;transform:translateX(-50%);width:44px;height:44px;background:#fff;border-radius:6px;padding:2px;box-shadow:0 2px 5px #0003;display:flex;align-items:center;justify-content:center}
+.qr img,.qr canvas{width:100%!important;height:100%!important}
+.qr svg{width:100%;height:100%}
+.ico{position:absolute;z-index:2;top:8px;left:50%;transform:translateX(-50%);font-size:20px;top:20px;filter:drop-shadow(0 2px 1px #0003)}
+.num{position:absolute;z-index:3;top:-14px;right:-4px;width:26px;height:26px;border-radius:50%;background:radial-gradient(#fff6d6,#f1d79a);border:2px solid #d9b25c;color:#7a5a1c;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px #0003}
+.done::after{content:"✓";position:absolute;z-index:4;bottom:-6px;left:-4px;width:22px;height:22px;border-radius:50%;background:#4fb286;color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;font-weight:800;box-shadow:0 2px 4px #0003}
+.paper{position:absolute;left:12%;right:12%;bottom:30%;height:70%;border-radius:6px;background:repeating-linear-gradient(#fff 0 7px,#f7d3e0 7px 8px);box-shadow:0 -2px 6px #0002;opacity:0;transform:translateY(0);transition:transform .5s .3s ease,opacity .3s .3s}
+.card{transition:transform .4s}
+.card.opening{transform:scale(1.08)}
+.card.opening .env::before{transform:perspective(260px) rotateX(180deg)}
+.card.opening .paper{opacity:1;transform:translateY(-38px)}
+.deco{text-align:center;font-size:30px;margin-top:22px;letter-spacing:8px}
+.mask{position:fixed;inset:0;background:#4b334088;display:none;align-items:center;justify-content:center;padding:16px;z-index:9}
+.mask.on{display:flex}
+.box{background:#fff;border-radius:22px;width:100%;max-width:380px;padding:18px;box-shadow:0 10px 30px #0004;border-top:6px solid var(--a)}
+.box h2{margin:0 0 10px;font-size:17px;color:#4b3340}
+.box label{display:block;font-size:13px;margin:8px 0 4px;font-weight:700}
+.box input,.box textarea{width:100%;border:1.5px solid #f0c9d6;border-radius:12px;padding:9px 11px;font:inherit;font-size:14px;direction:ltr;text-align:right}
+.box textarea{direction:rtl;min-height:70px;resize:vertical}
+.bq{display:flex;justify-content:center;margin:12px 0 4px;min-height:110px}
+.row{display:flex;gap:8px;margin-top:12px}
+.row button{flex:1;border:0;border-radius:14px;padding:10px;font:inherit;font-weight:800;cursor:pointer}
+.sv{background:linear-gradient(#f29bb8,#e0759b);color:#fff}
+.cl{background:#f5e9ee;color:#5a3a4a}
+.open{display:block;text-align:center;margin-top:8px;font-size:13px;color:#b04a74;font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="fl" style="top:6px;right:0">🌸</span>
+  <span class="fl" style="top:6px;left:0">🦋</span>
+  <div class="title"><span class="bow">🎀</span><h1>ملف الأداء الوظيفي</h1><div class="bk">📖</div></div>
+  <div class="name"><span>👤 اسم المعلمة :</span><input id="tn" value="فاطمه الشهراني" placeholder="اكتبي اسم المعلمة"></div>
+  <div class="grid" id="grid"></div>
+  <div class="deco">🌸 🎀 🌷</div>
+</div>
+
+<div class="mask" id="mask"><div class="box" id="box">
+  <h2 id="mt"></h2>
+  <label>رابط الشواهد (Drive / Canva / PDF ...)</label>
+  <input id="lk" placeholder="https://">
+  <label>ملاحظات</label>
+  <textarea id="nt"></textarea>
+  <div class="bq" id="bq"></div>
+  <a class="open" id="op" target="_blank" rel="noopener" style="display:none">فتح رابط الشواهد ↗</a>
+  <div class="row"><button class="sv" id="sv">حفظ</button><button class="cl" id="cl">إغلاق</button></div>
+</div></div>
+
+<script>
+var ITEMS=[
+["أداء الواجبات الوظيفية","📋","#f9c0d3","#f08fb0"],
+["التفاعل مع المجتمع المهني","👥","#cdb5f0","#a98be0"],
+["التفاعل مع أولياء الأمور","🤝","#bfe6c8","#8fd0a2"],
+["التنويع في استراتيجيات التدريس","🧑‍🏫","#bcdcf5","#8dbfe9"],
+["تحسين نتائج المتعلمين","📈","#fbe9a0","#f4d46a"],
+["إعداد وتنفيذ خطة التعلم","🗓️","#f9c0d3","#f4a3c0"],
+["توظيف تقنيات ووسائل التعلم المناسبة","💻","#bfe6c8","#8fd0a2"],
+["تهيئة البيئة التعليمية","🌱","#cdb5f0","#b296e6"],
+["الإدارة الصفية","🧩","#bcdcf5","#a2cdf0"],
+["تحليل نتائج المتعلمين وتشخيص مستوياتهم","🔍","#fbe9a0","#f4d46a"],
+["تنوع أساليب التقويم","🏅","#f9c0d3","#f4a3c0"]];
+var data={};
+try{data=JSON.parse(localStorage.getItem("perf_v1")||"{}")}catch(e){}
+var LINKS={0:"https://asrgirls-my.sharepoint.com/:f:/g/personal/t687472_asrg_moe_gov_sa/IgAM-N5nhQhXQ7PcXHbNMekyAYW1KAxA9h05CA-Aqo2msVA?e=wtnEON",1:"https://asrgirls-my.sharepoint.com/:f:/g/personal/t687472_asrg_moe_gov_sa/IgCs7rIUnl0gT6XhtTdeit8OAURj1z9moeLsGGm_qYO2F7Y?e=uinv2E",2:"https://asrgirls-my.sharepoint.com/:f:/g/personal/t687472_asrg_moe_gov_sa/IgDDnaKfUG7eT4GmbG4PMXE1AS62Po45_SAEtNht95F1Fe8?e=Nvw1UX",3:"https://asrgirls-my.sharepoint.com/:f:/g/personal/t687472_asrg_moe_gov_sa/IgA0cmBGHAsgSY4HmWVug-yOAeDh55QROvMsYZLrDqWWMsM?e=4YPJvt",4:"https://asrgirls-my.sharepoint.com/:f:/g/personal/t687472_asrg_moe_gov_sa/IgDrAIgLHYtyT6YRVP1XOG9CATlee7OzeqnUQJtEB07m1oo?e=sfKrp6",5:"https://asrgirls-my.sharepoint.com/:f:/g/personal/t687472_asrg_moe_gov_sa/IgDyQchYbjp3RLDJvqtdnRpTAWDpakXgnhnsmnjPtbxMTzs?e=fZaaLL",6:"https://asrgirls-my.sharepoint.com/:f:/g/personal/t687472_asrg_moe_gov_sa/IgAYZk9MwwmjSZGAH5giiLhLAVQkFT3Uyx3mc-3S7iyONPU?e=a8HKLE",7:"https://asrgirls-my.sharepoint.com/:f:/g/personal/t687472_asrg_moe_gov_sa/IgCHwF1TFyoJTKzH1Lj0W7_oAc9-fXtNIFI6pMaxZCqumAU?e=0Cb0zO",8:"https://asrgirls-my.sharepoint.com/:f:/g/personal/t687472_asrg_moe_gov_sa/IgDjO2iBNdN_TYZy1PkCRPbCAULmNfohsLJGTlOCsrINzOE?e=zirdbY",9:"https://asrgirls-my.sharepoint.com/:f:/g/personal/t687472_asrg_moe_gov_sa/IgAwWHagfEk9SIIP7jIi9uTmAa9pwo-05Qi6XRrtRvaGjb0?e=qembo4",10:"https://asrgirls-my.sharepoint.com/:f:/g/personal/t687472_asrg_moe_gov_sa/IgBp3uNNeIe7RKb5YphU7XdsAU8snLCPM2yu66c6LN8fr7c?e=0I74Zd"};
+function L(i){return (data[i]&&data[i].l)||LINKS[i]||""}
+function save(){try{localStorage.setItem("perf_v1",JSON.stringify(data))}catch(e){}}
+function ph(){return '<svg viewBox="0 0 21 21" shape-rendering="crispEdges"><rect width="21" height="21" fill="#fff"/><g fill="#4b3340"><path d="M0 0h7v7H0zM14 0h7v7h-7zM0 14h7v7H0z"/></g><g fill="#fff"><path d="M1 1h5v5H1zM15 1h5v5h-5zM1 15h5v5H1z"/></g><g fill="#4b3340"><path d="M2 2h3v3H2zM16 2h3v3h-3zM2 16h3v3H2zM9 1h2v2H9zM8 5h2v2H8zM10 8h3v2h-3zM8 10h2v3H8zM12 12h3v2h-3zM15 10h2v2h-2zM17 14h3v2h-3zM12 16h2v3h-2zM16 18h3v2h-3zM9 15h2v2H9z"/></g></svg>'}
+function mk(el,link){el.innerHTML="";if(link&&window.QRCode){try{new QRCode(el,{text:link,width:128,height:128,correctLevel:QRCode.CorrectLevel.M});return}catch(e){}}el.innerHTML=ph()}
+function card(i){
+  var it=ITEMS[i],b=document.createElement("button");
+  b.className="card"+(L(i)?" done":"");
+  b.style.setProperty("--a",it[2]);b.style.setProperty("--b",it[3]);
+  b.innerHTML='<span class="num">'+(i+1)+'</span><span class="qr"></span><div class="env"><span class="paper"></span><span class="ico">'+it[1]+'</span><span class="lab">'+it[0]+'</span></div>';
+  mk(b.querySelector(".qr"),L(i));
+  b.onclick=function(){b.classList.add("opening");setTimeout(function(){openM(i)},850)};
+  return b}
+var g=document.getElementById("grid");
+function build(){
+  g.innerHTML="";
+  for(var i=0;i<9;i++)g.appendChild(card(i));
+  var l=document.createElement("div");l.className="last";
+  l.appendChild(card(9));l.appendChild(card(10));g.appendChild(l)}
+build();
+var cur=0;
+function openM(i){
+  cur=i;var d=data[i]||{};
+  document.getElementById("mt").textContent=(i+1)+" - "+ITEMS[i][0];
+  document.getElementById("box").style.setProperty("--a",ITEMS[i][2]);
+  document.getElementById("lk").value=L(i);
+  document.getElementById("nt").value=d.n||"";
+  upd();document.getElementById("mask").classList.add("on")}
+function upd(){
+  var v=document.getElementById("lk").value.trim(),o=document.getElementById("op");
+  mk(document.getElementById("bq"),v);
+  if(/^https?:\/\//i.test(v)){o.href=v;o.style.display="block"}else o.style.display="none"}
+document.getElementById("lk").oninput=upd;
+document.getElementById("sv").onclick=function(){
+  data[cur]={l:document.getElementById("lk").value.trim(),n:document.getElementById("nt").value};
+  save();build();document.getElementById("mask").classList.remove("on")};
+document.getElementById("cl").onclick=function(){document.getElementById("mask").classList.remove("on");document.querySelectorAll(".opening").forEach(function(e){e.classList.remove("opening")})};
+try{var n=localStorage.getItem("perf_name");if(n)document.getElementById("tn").value=n}catch(e){}
+document.getElementById("tn").oninput=function(){try{localStorage.setItem("perf_name",this.value)}catch(e){}};
+</script>
+</body>
+</html>
